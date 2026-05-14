@@ -1,0 +1,85 @@
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Smooth scrolling and selection */
+html {
+    scroll-behavior: smooth;
+}
+
+::selection {
+    background-color: #6366f1;
+    color: white;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c7c7c7;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+
+/* Line clamp fallback for browsers that don't support line-clamp */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Card hover effects */
+.card-hover {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+}
+
+/* Form focus ring */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+}
+
+/* QR code styling */
+.qr-container {
+    display: inline-block;
+    padding: 8px;
+    background: white;
+    border-radius: 8px;
+}
+
+/* Messages fade animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message-animate {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Footer sticks to bottom */
+html, body {
+    height: 100%;
+}
+
+/* Input autofill override */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    border: 1px solid #d1d5db;
+    -webkit-box-shadow: 0 0 0 30px white inset;
+    -webkit-text-fill-color: #374151;
+}

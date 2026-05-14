@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center">
+        <h1 class="text-5xl font-extrabold text-gray-900 sm:text-6xl">
+            Hello, <span class="text-indigo-600">{{ name }}</span>
+        </h1>
+        <p class="mt-6 text-xl text-gray-500 max-w-2xl mx-auto">
+            Welcome to our blog where we share stories, ideas, and insights about technology and life.
+        </p>
+        <div class="mt-10 flex justify-center gap-4">
+            <a href="/blogs/" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors shadow-md">
+                Browse Blogs
+            </a>
+            <a href="/subscribe/" class="bg-white hover:bg-gray-50 text-gray-700 px-8 py-3 rounded-lg text-lg font-semibold border border-gray-300 transition-colors shadow-md">
+                Subscribe
+            </a>
+        </div>
+    </div>
+    <div class="mt-16 flex justify-center">
+        <img src="{% static 'images/django-img.jpg' %}" alt="Django Logo" class="w-80 h-auto rounded-xl shadow-xl" onerror="this.style.display='none'">
+    </div>
+</div>
+{% endblock %}

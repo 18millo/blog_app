@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-6">About Us</h1>
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+            Welcome to our blog! We are a team of passionate writers sharing our thoughts and experiences
+            on a wide range of topics including technology, lifestyle, and personal development.
+        </p>
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+            Our mission is to create a space where ideas flourish and readers find value in every visit.
+            Whether you're here to learn something new or just to relax with a good read, we've got you covered.
+        </p>
+        <div class="border-t border-gray-200 pt-6 mt-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Our Team</h2>
+            <p class="text-gray-600">Meet the people behind the posts. {{ name }} and our wonderful contributors.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
