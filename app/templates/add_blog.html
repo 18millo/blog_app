@@ -3,26 +3,18 @@
 {% block title %}Add Blog{% endblock %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-        <h1 class="text-3xl font-extrabold text-gray-900 mb-8">Add a New Blog Post</h1>
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-purple-100">
+        <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 mb-8">Create New Post</h1>
 
-        <form method="post" class="space-y-6">
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
             {% csrf_token %}
 
             {% if form.non_field_errors %}
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
                 {{ form.non_field_errors }}
             </div>
             {% endif %}
-
-            <div>
-                <label for="{{ form.author.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">Author</label>
-                {{ form.author }}
-                {% if form.author.errors %}
-                <p class="text-red-500 text-xs mt-1">{{ form.author.errors }}</p>
-                {% endif %}
-            </div>
 
             <div>
                 <label for="{{ form.title.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
@@ -41,6 +33,14 @@
             </div>
 
             <div>
+                <label for="{{ form.image.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">Featured Image</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                <p class="text-red-500 text-xs mt-1">{{ form.image.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div>
                 <label for="{{ form.published_date.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">Published On</label>
                 {{ form.published_date }}
                 {% if form.published_date.errors %}
@@ -48,11 +48,11 @@
                 {% endif %}
             </div>
 
-            <div class="flex gap-4">
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-colors">
-                    Save Post
+            <div class="flex gap-4 pt-4">
+                <button type="submit" class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 text-white font-semibold py-3 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all">
+                    Publish Post
                 </button>
-                <a href="/blogs/" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-colors">
+                <a href="/blogs/" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-8 rounded-xl transition-all">
                     Cancel
                 </a>
             </div>

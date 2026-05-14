@@ -1,24 +1,33 @@
 from django.shortcuts import render, redirect
-from .models import Blog, Subscriber
+from .models import Author, Blog, Subscriber
 from django.contrib import messages
 from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from django_otp import login as otp_login
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User
 import qrcode
 from io import BytesIO
 import base64
 
+def get_user_name(request):
+    user = request.user
+    if user.is_authenticated:
+        return user.get_full_name() or user.username
+    return 'Guest'
+
 def index(request):
-    context = { 'name': 'John Doe' }
+    context = { 'name': get_user_name(request) }
     return render(request, 'index.html', context)
 
 def about(request):
-    context = { 'name': 'John Doe' }
+    context = { 'name': get_user_name(request) }
     return render(request, 'about.html', context)
 
 def contact(request):
-    context = { 'name': 'John Doe' }
+    context = { 'name': get_user_name(request) }
     return render(request, 'contact.html', context)
 
 def bloglist(request):
@@ -42,14 +51,37 @@ def subscribe(request):
 
 @login_required
 def add_blog(request):
+    author, _ = Author.objects.get_or_create(
+        user=request.user,
+        defaults={
+            'first_name': request.user.first_name or request.user.username,
+            'last_name': '',
+            'email': request.user.email,
+        }
+    )
     if request.method == 'POST':
-        form = BlogForm(request.POST)
+        form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
-            blog = form.save()
+            blog = form.save(commit=False)
+            blog.author = author
+            blog.save()
             return redirect('blog_list')
     else:
         form = BlogForm()
     return render(request, 'add_blog.html', { 'form': form })
+
+
+@receiver(post_save, sender=User)
+def create_author_for_new_user(sender, instance, created, **kwargs):
+    if created and not hasattr(instance, 'author'):
+        Author.objects.get_or_create(
+            user=instance,
+            defaults={
+                'first_name': instance.first_name or instance.username,
+                'last_name': '',
+                'email': instance.email,
+            }
+        )
 
 @login_required
 def profile(request):

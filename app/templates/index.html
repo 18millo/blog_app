@@ -3,25 +3,54 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="text-center">
-        <h1 class="text-5xl font-extrabold text-gray-900 sm:text-6xl">
-            Hello, <span class="text-indigo-600">{{ name }}</span>
-        </h1>
-        <p class="mt-6 text-xl text-gray-500 max-w-2xl mx-auto">
-            Welcome to our blog where we share stories, ideas, and insights about technology and life.
-        </p>
-        <div class="mt-10 flex justify-center gap-4">
-            <a href="/blogs/" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors shadow-md">
-                Browse Blogs
-            </a>
-            <a href="/subscribe/" class="bg-white hover:bg-gray-50 text-gray-700 px-8 py-3 rounded-lg text-lg font-semibold border border-gray-300 transition-colors shadow-md">
-                Subscribe
-            </a>
+<div class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 opacity-30 blur-3xl -z-10"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center">
+            <h1 class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 sm:text-7xl leading-tight">
+                Hello, {{ name }}
+            </h1>
+            <p class="mt-6 text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Welcome to our blog where we share stories, ideas, and insights about technology and life. Join our growing community of curious minds.
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="/blogs/" class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 text-white px-8 py-3.5 rounded-xl text-lg font-semibold transition-all shadow-lg hover:shadow-xl">
+                    Browse Blogs
+                </a>
+                <a href="/subscribe/" class="bg-white hover:bg-purple-50 text-gray-700 px-8 py-3.5 rounded-xl text-lg font-semibold border-2 border-purple-200 hover:border-purple-300 transition-all shadow-lg hover:shadow-xl">
+                    Subscribe
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="mt-16 flex justify-center">
-        <img src="{% static 'images/django-img.jpg' %}" alt="Django Logo" class="w-80 h-auto rounded-xl shadow-xl" onerror="this.style.display='none'">
+        <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 border border-purple-100">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Read Stories</h3>
+                <p class="text-gray-500">Explore a wide range of topics from our talented authors.</p>
+            </div>
+            <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 border border-purple-100">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Write Posts</h3>
+                <p class="text-gray-500">Share your thoughts and ideas with the world.</p>
+            </div>
+            <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 border border-purple-100">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center mb-4">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Join Community</h3>
+                <p class="text-gray-500">Connect with like-minded people and grow together.</p>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
