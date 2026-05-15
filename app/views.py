@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Author, Blog, Subscriber
 from django.contrib import messages
 from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from datetime import timedelta
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from django_otp import login as otp_login
 from django.db.models.signals import post_save
@@ -35,6 +37,11 @@ def bloglist(request):
     context = { 'blogs': blogs }
     return render(request, 'blog_list.html', context)
 
+def blog_detail(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    context = { 'blog': blog }
+    return render(request, 'blog_detail.html', context)
+
 def subscribe(request):
     if request.method == 'POST':
         email = request.POST.get('email', '').strip()
@@ -64,10 +71,16 @@ def add_blog(request):
         if form.is_valid():
             blog = form.save(commit=False)
             blog.author = author
+            tz_offset = request.POST.get('tz_offset')
+            if blog.published_date and tz_offset:
+                offset_minutes = int(tz_offset)
+                blog.published_date = blog.published_date + timedelta(minutes=-offset_minutes)
             blog.save()
             return redirect('blog_list')
     else:
-        form = BlogForm()
+        now = timezone.localtime(timezone.now())
+        initial = {'published_date': now.strftime('%Y-%m-%dT%H:%M')}
+        form = BlogForm(initial=initial)
     return render(request, 'add_blog.html', { 'form': form })
 
 

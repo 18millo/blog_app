@@ -80,4 +80,8 @@ htmlcov/
 *.tmp
 .cache
 .pytest_cache/
+# Node / npm (removed - using pure Django)
+package.json
+package-lock.json
+tailwind.config.js
 node_modules/
