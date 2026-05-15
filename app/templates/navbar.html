@@ -13,6 +13,19 @@
             </div>
             <div class="flex items-center space-x-3">
                 {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                <div class="hidden md:flex items-center space-x-1 mr-2">
+                    <a href="/admin-panel/" class="text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 py-2 rounded-lg text-sm font-medium transition-all">Admin</a>
+                </div>
+                {% else %}
+                {% for g in user.groups.all %}
+                {% if g.name == "Admin" %}
+                <div class="hidden md:flex items-center space-x-1 mr-2">
+                    <a href="/admin-panel/" class="text-gray-600 hover:text-purple-600 hover:bg-purple-50 px-3 py-2 rounded-lg text-sm font-medium transition-all">Admin</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
                 <a href="/add-blog/" class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 text-white px-5 py-2 rounded-lg text-sm font-semibold transition-all shadow-md hover:shadow-lg">
                     + New Post
                 </a>

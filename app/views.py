@@ -9,7 +9,9 @@ from django_otp.plugins.otp_totp.models import TOTPDevice
 from django_otp import login as otp_login
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.db.models import Count
+from .decorators import admin_required, author_required
 import qrcode
 from io import BytesIO
 import base64
@@ -157,3 +159,63 @@ def verify_2fa(request):
                 return redirect('index')
         messages.error(request, 'Invalid verification code. Please try again.')
     return render(request, 'verify_2fa.html')
+
+
+@admin_required
+def admin_dashboard(request):
+    blog_count = Blog.objects.count()
+    user_count = User.objects.count()
+    author_count = Author.objects.count()
+    subscriber_count = Subscriber.objects.count()
+    admin_count = Group.objects.get(name='Admin').user_set.count()
+    recent_blogs = Blog.objects.select_related('author').order_by('-created_date')[:5]
+    recent_users = User.objects.order_by('-date_joined')[:5]
+    context = {
+        'blog_count': blog_count,
+        'user_count': user_count,
+        'author_count': author_count,
+        'subscriber_count': subscriber_count,
+        'admin_count': admin_count,
+        'recent_blogs': recent_blogs,
+        'recent_users': recent_users,
+    }
+    return render(request, 'admin/dashboard.html', context)
+
+
+@admin_required
+def admin_manage_blogs(request):
+    blogs = Blog.objects.select_related('author').all()
+    return render(request, 'admin/manage_blogs.html', {'blogs': blogs})
+
+
+@admin_required
+def admin_blog_delete(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    blog.delete()
+    messages.success(request, f'Blog "{blog.title}" has been deleted.')
+    return redirect('admin_manage_blogs')
+
+
+@admin_required
+def admin_manage_users(request):
+    users = User.objects.prefetch_related('groups').all().order_by('-date_joined')
+    admin_group = Group.objects.get(name='Admin')
+    author_group = Group.objects.get(name='Author')
+    return render(request, 'admin/manage_users.html', {
+        'users': users,
+        'admin_group': admin_group,
+        'author_group': author_group,
+    })
+
+
+@admin_required
+def admin_toggle_role(request, user_id, group_name):
+    user = get_object_or_404(User, id=user_id)
+    group = get_object_or_404(Group, name=group_name)
+    if group in user.groups.all():
+        user.groups.remove(group)
+        messages.success(request, f'Removed {group_name} role from {user.username}.')
+    else:
+        user.groups.add(group)
+        messages.success(request, f'Granted {group_name} role to {user.username}.')
+    return redirect('admin_manage_users')
